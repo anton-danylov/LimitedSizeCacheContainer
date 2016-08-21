@@ -17,11 +17,17 @@ namespace LimitedSizeCacheContainer
             get { return _items.Count; }
         }
 
+
         public LimitedSizeCacheContainer(int maxSize)
         {
             _maxSize = maxSize;
         }
 
+        /// <summary>
+        /// Add new item to cache and remove the item that was not retrieved to preserve max allowed size
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="item">Cached item</param>
         public void AddItem(string key, T item)
         {
             if (IsItemInCache(key))
@@ -39,6 +45,11 @@ namespace LimitedSizeCacheContainer
             }
         }
 
+        /// <summary>
+        /// Get item in cache by key and update its position to prevent removal
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <returns>Cached item</returns>
         public T RetrieveItem(string key)
         {
             if (!IsItemInCache(key))
@@ -65,5 +76,4 @@ namespace LimitedSizeCacheContainer
             return _itemsMap.ContainsKey(key);
         }
     }
-
 }
